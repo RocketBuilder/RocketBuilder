@@ -33,15 +33,12 @@ time.sleep(2)
 
 # Turn back to 90 degrees
 print ("Turning back to 90 degrees for 2 seconds")
-servo1.ChangeDutyCycle(7)
-time.sleep(0.5)
+servo1.ChangeDutyCycle(8)
 servo1.ChangeDutyCycle(0)
-time.sleep(1.5)
 
 #turn back to 0 degrees
 print ("Turning back to 0 degrees")
-servo1.ChangeDutyCycle(2)
-time.sleep(0.5)
+servo1.ChangeDutyCycle(4)
 servo1.ChangeDutyCycle(0)
 
 #Clean things up at the end
