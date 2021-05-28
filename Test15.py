@@ -1,48 +1,50 @@
-
-# Simple demo of of the PCA9685 PWM servo/LED controller library.
-# This will move channel 0 from min to max position repeatedly.
-# Author: Tony DiCola
-# License: Public Domain
-from __future__ import division
+# Import libraries
+import RPi.GPIO as GPIO
 import time
 
-# Import the PCA9685 module.
-import Adafruit_PCA9685
+# Set GPIO numbering mode
+GPIO.setmode(GPIO.BOARD)
 
-# Uncomment to enable debug output.
-# import logging
-# logging.basicConfig(level=logging.DEBUG)
+# Set pin 11 as an output, and set servo1 as pin 11 as PWM
+GPIO.setup(11,GPIO.OUT)
+servo1 = GPIO.PWM(11,50) # Note 11 is pin, 50 = 50Hz pulse
 
-# Initialise the PCA9685 using the default address (0x40).
-pwm = Adafruit_PCA9685.PCA9685()
+#start PWM running, but with value of 0 (pulse off)
+servo1.start(0)
+print ("Waiting for 2 seconds")
+time.sleep(2)
 
-# Alternatively specify a different address and/or bus:
-# pwm = Adafruit_PCA9685.PCA9685(address=0x41, busnum=2)
+#Let's move the servo!
+print ("Rotating 180 degrees in 10 steps")
 
-# Configure min and max servo pulse lengths
-servo_min = 150  # Min pulse length out of 4096
-servo_max = 600  # Max pulse length out of 4096
+# Define variable duty
+duty = 2
 
+# Loop for duty values from 2 to 12 (0 to 180 degrees)
+while duty <= 12:
+    servo1.ChangeDutyCycle(duty)
+    time.sleep(0.3)
+    servo1.ChangeDutyCycle(0)
+    time.sleep(0.7)
+    duty = duty + 1
 
-# Helper function to make setting a servo pulse width simpler.
-def set_servo_pulse(channel, pulse):
-    pulse_length = 1000000  # 1,000,000 us per second
-    pulse_length //= 60  # 60 Hz
-    print('{0}us per period'.format(pulse_length))
-    pulse_length //= 4096  # 12 bits of resolution
-    print('{0}us per bit'.format(pulse_length))
-    pulse *= 1000
-    pulse //= pulse_length
-    pwm.set_pwm(channel, 0, pulse)
+# Wait a couple of seconds
+time.sleep(2)
 
+# Turn back to 90 degrees
+print ("Turning back to 90 degrees for 2 seconds")
+servo1.ChangeDutyCycle(7)
+time.sleep(0.5)
+servo1.ChangeDutyCycle(0)
+time.sleep(1.5)
 
-# Set frequency to 60hz, good for servos.
-pwm.set_pwm_freq(60)
+#turn back to 0 degrees
+print ("Turning back to 0 degrees")
+servo1.ChangeDutyCycle(2)
+time.sleep(0.5)
+servo1.ChangeDutyCycle(0)
 
-print('Moving servo on channel 0, press Ctrl-C to quit...')
-while True:
-    # Move servo on channel O between extremes.
-    pwm.set_pwm(2, 6, servo_min)
-    time.sleep(1)
-    pwm.set_pwm(8, 12, servo_max)
-    time.sleep(1)
+#Clean things up at the end
+servo1.stop()
+GPIO.cleanup()
+print ("Goodbye")
