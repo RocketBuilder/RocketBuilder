@@ -1,9 +1,9 @@
-import time
 # Simple demo of of the PCA9685 PWM servo/LED controller library.
 # This will move channel 0 from min to max position repeatedly.
 # Author: Tony DiCola
 # License: Public Domain
 from __future__ import division
+print 1/2
 import time
 # Import the PCA9685 module.
 import Adafruit_PCA9685
