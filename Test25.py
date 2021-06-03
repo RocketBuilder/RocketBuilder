@@ -6,7 +6,7 @@ from __future__ import division
 print 1/2
 import time
 # Import the PCA9685 module.
-import Adafruit_PCA9685
+
 # Uncomment to enable debug output.
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
