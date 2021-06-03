@@ -2,7 +2,7 @@
 # This will move channel 0 from min to max position repeatedly.
 # Author: Tony DiCola
 # License: Public Domain
-from _future_ import division
+from __future__ import division
 import time
 
 # Import the PCA9685 module.
