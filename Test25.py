@@ -5,8 +5,6 @@
 from __future__ import division
 print 1/2
 import time
-# Import the PCA9685 module.
-
 # Uncomment to enable debug output.
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
